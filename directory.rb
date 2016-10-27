@@ -14,18 +14,24 @@
 # ]
 #
 def print_header
-puts "The students of Villains Academy"
-puts "----------------"
+puts "The students of Villains Academy".center(50)
+puts "----------------".center(50)
 end
 
 def print(students)
-  students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+  filtered_students = []
+  students.each do |student|
+    if student[:name].downcase.chars.first == 'a' && student[:name].length <= 12
+      filtered_students << student
+      filtered_students.each_with_index do |name, index|
+      puts "#{index + 1}. #{name[:name]} (#{student[:cohort]} cohort)".center(50)
+      end
+    end
   end
 end
 
 def print_footer(students)
-  puts "Overal, we have #{students.count} great students "
+  puts "Overal, we have #{students.count} great students ".center(50)
 end
 #Nothing happens until we call the methods
 def input_students
