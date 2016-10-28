@@ -12,7 +12,22 @@
 #  {name: "Joffrey Baratheon", cohort: :november},
 #  {name: "Norman Bates", cohort: :november}
 # ]
-#
+
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, please enter 'return' twice"
+  students = []
+  name = gets.chomp
+  while !name.empty? do
+    puts "How old is the student"
+    age = gets.chomp
+    students << {name: name, age: age, cohort: :november}
+    puts "Now we have #{students.count} students"
+    name = gets.chomp
+  end
+  students
+end
+
 def print_header
 puts "The students of Villains Academy".center(50)
 puts "----------------".center(50)
@@ -28,8 +43,8 @@ def print(students)
     end
     i += 1
   end
-  filtered_students.each_with_index do |name, index|
-  puts "#{index + 1}. #{name[:name]} (#{student[:cohort]} cohort)".center(50)
+  filtered_students.each_with_index do |student, index|
+  puts "#{index + 1}. #{student[:name]} , the student is #{student[:age]} years old(#{student[:cohort]} cohort)".center(50)
   end
 end
 
@@ -37,25 +52,6 @@ def print_footer(students)
   puts "Overal, we have #{students.count} great students ".center(50)
 end
 #Nothing happens until we call the methods
-def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, please enter 'return' twice"
-
-  # create an empty array
-  students = []
-  # get the first name
-  name = gets.chomp
-  # while the name is not empty, repeat this code
-  while !name.empty? do
-    # add the student hash to the array
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
-    # get another name from user
-    name = gets.chomp
-  end
-  # Return de array of students
-  students
-end
 
 students = input_students
 print_header
