@@ -21,7 +21,9 @@ def input_students
   while !name.empty? do
     puts "How old is the student"
     age = gets.chomp
-    students << {name: name, age: age, cohort: :november}
+    puts "Student height"
+    height = gets.chomp
+    students << {name: name, age: age, height: height, cohort: :november}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -44,7 +46,7 @@ def print(students)
     i += 1
   end
   filtered_students.each_with_index do |student, index|
-  puts "#{index + 1}. #{student[:name]} , the student is #{student[:age]} years old(#{student[:cohort]} cohort)".center(50)
+  puts "#{index + 1}. #{student[:name]} , the student is #{student[:age]} years old and is #{student[:height]} tall(#{student[:cohort]} cohort)".center(50)
   end
 end
 
