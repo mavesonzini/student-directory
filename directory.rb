@@ -20,13 +20,16 @@ end
 
 def print(students)
   filtered_students = []
-  students.each do |student|
-    if student[:name].downcase.chars.first == 'a' && student[:name].length <= 12
+  i = 0
+  while i < students.length
+    student = students[i]
+    if student[:name].downcase.chars.first == 'd' && student[:name].length <= 12
       filtered_students << student
-      filtered_students.each_with_index do |name, index|
-      puts "#{index + 1}. #{name[:name]} (#{student[:cohort]} cohort)".center(50)
-      end
     end
+    i += 1
+  end
+  filtered_students.each_with_index do |name, index|
+  puts "#{index + 1}. #{name[:name]} (#{student[:cohort]} cohort)".center(50)
   end
 end
 
