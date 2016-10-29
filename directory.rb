@@ -18,12 +18,32 @@ def input_students
   puts "To finish, please enter 'return' twice"
   students = []
   name = gets.chomp
+  # if name.length == 0
+  #   name = "A studen has no name"
+  # end
   while !name.empty? do
     puts "How old is the student"
     age = gets.chomp
+    student_age = "The student has #{age} years old"
+    if age.length == 0
+      student_age = "a student has no age"
+    end
+
     puts "Student height"
     height = gets.chomp
-    students << {name: name, age: age, height: height, cohort: :november}
+    student_height = "The student is #{} feet tall"
+    if height.length == 0
+      student_height = "A student has no height"
+    end
+
+    puts "What cohort is the student in"
+    cohort = gets.chomp
+    student_cohort = "#{cohort} Cohort"
+    if cohort.length == 0
+      student_cohort = "a student has no Cohort"
+    end
+
+    students << {name: name, student_age: student_age, student_height: student_height, student_cohort: student_cohort}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -40,13 +60,13 @@ def print(students)
   i = 0
   while i < students.length
     student = students[i]
-    if student[:name].downcase.chars.first == 'd' && student[:name].length <= 12
+    if student[:name].downcase.chars.first == 'a' && student[:name].length <= 12
       filtered_students << student
     end
     i += 1
   end
   filtered_students.each_with_index do |student, index|
-  puts "#{index + 1}. #{student[:name]} , the student is #{student[:age]} years old and is #{student[:height]} tall(#{student[:cohort]} cohort)".center(50)
+  puts "#{index + 1}. #{student[:name]} , #{student[:student_age]}. #{student[:student_height]} (#{student[:student_cohort]})".center(50)
   end
 end
 
