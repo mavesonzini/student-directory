@@ -17,18 +17,18 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, please enter 'return' twice"
   students = []
-  name = gets.chomp
+  name = gets.delete("\n")
 
   while !name.empty? do
     puts "How old is the student"
-    age = gets.chomp
+    age = gets.delete("\n")
     student_age = "The student has #{age} years old"
     if age.length == 0
       student_age = "A student has no age"
     end
 
     puts "Student height"
-    height = gets.chomp
+    height = gets.delete("\n")
     student_height = "The student is #{} feet tall"
     if height.length == 0
       student_height = "A student has no height"
@@ -47,7 +47,7 @@ def input_students
       else
         puts "Now we have #{students.count} students"
       end
-    name = gets.chomp
+    name = gets.delete("\n")
   end
   students
 end
@@ -107,7 +107,11 @@ end
 #Nothing happens until we call the methods
 
 students = input_students
-puts "If you want to print all cohorts write 'ALL'. If you want an specific cohort write the cohort month"
+# puts "If you want to print all cohorts write 'ALL'. If you want an specific cohort write the cohort month"
+# cohort_filter = gets.delete("\n")
+# if cohort_filter == "ALL"
+
+
 print_header
 # print(students)
 print_student(students)
