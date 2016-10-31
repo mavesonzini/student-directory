@@ -13,32 +13,42 @@
 #  {name: "Norman Bates", cohort: :november}
 # ]
 
+@students = []
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "9"
+      exit
+    else puts "I don't know what you meant, try again"
+  end
+end
+
 def interactive_menu
-  students = []
   loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    selection = gets.chomp
-    case selection
-      when "1"
-        students = input_students
-      when "2"
-        print_header
-        # print(students)
-        print_student(students)
-        print_footer(students)
-      when "9"
-        exit
-      else puts "I don't know what you meant, try again"
-      end
+    print_menu
+    process(gets.chomp)
   end
 end
 
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, please enter 'return' twice"
-  students = []
   name = gets.delete("\n")
 
   while !name.empty? do
@@ -63,15 +73,15 @@ def input_students
       student_cohort = "a student has no Cohort"
     end
 
-    students << {name: name, student_age: student_age, student_height: student_height, student_cohort: student_cohort}
-      if students.count == 1
+    @students << {name: name, student_age: student_age, student_height: student_height, student_cohort: student_cohort}
+      if @students.count == 1
         puts "Now we have 1 student"
       else
-        puts "Now we have #{students.count} students"
+        puts "Now we have #{@students.count} students"
       end
     name = gets.delete("\n")
   end
-  students
+  @students
 end
 
 def print_header
@@ -79,12 +89,12 @@ puts "The students of Villains Academy".center(50)
 puts "----------------".center(50)
 end
 
-def print(students)
+def print
   filtered_students = []
   i = 0
-  while i < students.length
-    student = students[i]
-    if student[:name].downcase.chars.first == 'a' && student[:name].length <= 12
+  while i < @students.length
+    student = @students[i]
+    if @student[:name].downcase.chars.first == 'a' && @student[:name].length <= 12
       filtered_students << student
     end
     i += 1
@@ -94,8 +104,8 @@ def print(students)
   end
 end
 
-def print_student(students)
-  sorted_students_by_cohort = group_by_cohorts(students)
+def print_students_list
+  sorted_students_by_cohort = group_by_cohorts
     sorted_students_by_cohort.each do |students_array|
       students_array.each do |student|
         puts " #{student[:name]}. #{student[:student_age]}. #{student[:student_height]} (#{student[:student_cohort]})".center(50)
@@ -103,9 +113,9 @@ def print_student(students)
     end
 end
 
-def group_by_cohorts(students)
+def group_by_cohorts
   students_grouped_by_cohort = []
-  for student in students
+  for student in @students
     cohort_found = false
     for subarray in students_grouped_by_cohort
       if subarray.first[:student_cohort] == student[:student_cohort]
@@ -123,8 +133,8 @@ def group_by_cohorts(students)
   return students_grouped_by_cohort
 end
 
-def print_footer(students)
-  puts "Overal, we have #{students.count} great students ".center(50)
+def print_footer
+  puts "Overal, we have #{@students.count} great students ".center(50)
 end
 #Nothing happens until we call the methods
 
