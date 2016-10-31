@@ -18,15 +18,13 @@ def input_students
   puts "To finish, please enter 'return' twice"
   students = []
   name = gets.chomp
-  # if name.length == 0
-  #   name = "A studen has no name"
-  # end
+
   while !name.empty? do
     puts "How old is the student"
     age = gets.chomp
     student_age = "The student has #{age} years old"
     if age.length == 0
-      student_age = "a student has no age"
+      student_age = "A student has no age"
     end
 
     puts "Student height"
@@ -44,7 +42,11 @@ def input_students
     end
 
     students << {name: name, student_age: student_age, student_height: student_height, student_cohort: student_cohort}
-    puts "Now we have #{students.count} students"
+      if students.count == 1
+        puts "Now we have 1 student"
+      else
+        puts "Now we have #{students.count} students"
+      end
     name = gets.chomp
   end
   students
@@ -66,8 +68,37 @@ def print(students)
     i += 1
   end
   filtered_students.each_with_index do |student, index|
-  puts "#{index + 1}. #{student[:name]} , #{student[:student_age]}. #{student[:student_height]} (#{student[:student_cohort]})".center(50)
+  puts "#{index + 1}. #{student[:name]}. #{student[:student_age]}. #{student[:student_height]} (#{student[:student_cohort]})".center(50)
   end
+end
+
+def print_student(students)
+  sorted_students_by_cohort = group_by_cohorts(students)
+    sorted_students_by_cohort.each do |students_array|
+      students_array.each do |student|
+        puts " #{student[:name]}. #{student[:student_age]}. #{student[:student_height]} (#{student[:student_cohort]})".center(50)
+      end
+    end
+end
+
+def group_by_cohorts(students)
+  students_grouped_by_cohort = []
+  for student in students
+    cohort_found = false
+    for subarray in students_grouped_by_cohort
+      if subarray.first[:student_cohort] == student[:student_cohort]
+        subarray << student
+        cohort_found = true
+        break
+      end
+    end
+    if cohort_found == false
+      subarray = []
+      subarray << student
+      students_grouped_by_cohort << subarray
+    end
+  end
+  return students_grouped_by_cohort
 end
 
 def print_footer(students)
@@ -76,6 +107,8 @@ end
 #Nothing happens until we call the methods
 
 students = input_students
+puts "If you want to print all cohorts write 'ALL'. If you want an specific cohort write the cohort month"
 print_header
-print(students)
+# print(students)
+print_student(students)
 print_footer(students)
