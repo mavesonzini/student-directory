@@ -1,3 +1,4 @@
+<<<<<<< HEAD
   def input_students
     puts "Please enter the names of the students"
     puts "To finish, just hit return twice"
@@ -37,3 +38,6 @@
   print_header
   print(students)
   print_footer(students)
+=======
+
+>>>>>>> a105dbcb748b03fc9b5ce559b43f0bf8a08ca7a4
