@@ -18,6 +18,7 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list of students.csv"
   puts "9. Exit"
 end
 
@@ -33,6 +34,8 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else puts "I don't know what you meant, try again"
@@ -136,9 +139,19 @@ end
 def print_footer
   puts "Overal, we have #{@students.count} great students ".center(50)
 end
-#Nothing happens until we call the methods
 
-
+def save_students
+    #the first argument is the name of the file I want to open. The second argument is the initian for read only,
+    #write only, read and write, etc. r: read only, w:write only, w+: read and write (if the file exists, overites
+    # everything in the file.) a+: read and write (if the file exists, starts at the end of the file. Otherwise creates a new file)
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:student_cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
 # puts "If you want to print all cohorts write 'ALL'. If you want an specific cohort write the cohort month"
 # cohort_filter = gets.delete("\n")
 # if cohort_filter == "ALL"
