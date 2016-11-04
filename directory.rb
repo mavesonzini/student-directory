@@ -48,15 +48,14 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, please enter 'return' twice"
-  name = gets.delete("\n")
-
+  name = STDIN.gets.delete("\n")
   while !name.empty? do
     puts "How old is the student"
     age = gets.delete("\n")
@@ -110,38 +109,35 @@ def print
   end
 end
 
-def print_students_list
-  sorted_students_by_cohort = group_by_cohorts
-    sorted_students_by_cohort.each do |students_array|
-      students_array.each do |student|
-        puts " #{student[:name]}. #{student[:student_age]}. #{student[:student_height]} (#{student[:student_cohort]})".center(50)
-      end
-    end
-end
-
-def group_by_cohorts
-  students_grouped_by_cohort = []
-  for student in @students
-    cohort_found = false
-    for subarray in students_grouped_by_cohort
-      if subarray.first[:student_cohort] == student[:student_cohort]
-        subarray << student
-        cohort_found = true
-        break
-      end
-    end
-    if cohort_found == false
-      subarray = []
-      subarray << student
-      students_grouped_by_cohort << subarray
-    end
+def print_student_list
+  @students.each do |student|
+    puts "#{student[:name]} (#{student[:student_cohort]} cohort)"
   end
-  return students_grouped_by_cohort
 end
 
-def print_footer
-  puts "Overal, we have #{@students.count} great students ".center(50)
-end
+# def group_by_cohorts
+#   students_grouped_by_cohort = []
+#   for student in @students
+#     cohort_found = false
+#     for subarray in students_grouped_by_cohort
+#       if subarray.first[:student_cohort] == student[:student_cohort]
+#         subarray << student
+#         cohort_found = true
+#         break
+#       end
+#     end
+#     if cohort_found == false
+#       subarray = []
+#       subarray << student
+#       students_grouped_by_cohort << subarray
+#     end
+#   end
+#   return students_grouped_by_cohort
+# end
+#
+# def print_footer
+#   puts "Overal, we have #{@students.count} great students ".center(50)
+# end
 
 def save_students
     #the first argument is the name of the file I want to open. The second argument is the initian for read only,
@@ -156,15 +152,27 @@ def save_students
   file.close
 end
 
-def load_students
+def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: :student_cohort}
+    @students << {name: name, cohort: cohort}
   end
   file.close
 end
-# puts "If you want to print all cohorts write 'ALL'. If you want an specific cohort write the cohort month"
-# cohort_filter = gets.delete("\n")
-# if cohort_filter == "ALL"
+
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+
+try_load_students
 interactive_menu
